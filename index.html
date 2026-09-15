@@ -1,128 +1,476 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mack – Engineering Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background: #003366;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-        nav {
-            background: #e0e0e0;
-            padding: 1rem;
-            text-align: center;
-        }
-        nav a {
-            margin: 0 1rem;
-            text-decoration: none;
-            color: #003366;
-            font-weight: bold;
-        }
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-        }
-        .project {
-            margin-bottom: 2rem;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background: #003366;
-            color: white;
-            margin-top: 2rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mack Harrington — Mechanical Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:   #142B45;
+    --blue-panel:  #1B3A5C;
+    --blue-panel-2:#1F4368;
+    --line:        rgba(234,242,248,0.16);
+    --line-strong: rgba(234,242,248,0.32);
+    --ink:         #EAF2F8;
+    --ink-dim:     #9FB6C9;
+    --accent:      #E8632C;
+    --accent-dim:  rgba(232,99,44,0.16);
+    --radius: 2px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
+
+  body{
+    margin:0;
+    background: var(--blue-deep);
+    background-image:
+      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 88px);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  a{ color: var(--accent); }
+
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ---------- Title block (header) ---------- */
+  .titleblock{
+    border-bottom: 1px solid var(--line-strong);
+    padding: 28px 0 18px;
+  }
+  .titleblock .wrap{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .titleblock h1{
+    margin: 0 0 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: 0.02em;
+  }
+  .titleblock .role{
+    color: var(--ink-dim);
+    font-size: 0.95rem;
+  }
+  .meta{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 4px 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    text-align: left;
+  }
+  .meta span{ display:block; }
+  .meta b{
+    color: var(--ink);
+    font-weight: 500;
+    display:block;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position: sticky;
+    top: 0;
+    background: rgba(20,43,69,0.94);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid var(--line-strong);
+    z-index: 10;
+  }
+  nav .wrap{
+    display:flex;
+    gap: 4px;
+    overflow-x: auto;
+  }
+  nav a{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    text-decoration: none;
+    padding: 14px 14px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  nav a:hover{
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+
+  /* ---------- Sheets ---------- */
+  main{ padding: 48px 0 20px; }
+
+  .sheet{
+    position: relative;
+    background: var(--blue-panel);
+    border: 1px solid var(--line-strong);
+    margin-bottom: 40px;
+    padding: 32px 34px;
+    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+  }
+  .sheet::before{
+    /* corner fold seam */
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:22px; height:22px;
+    border-left: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .sheet-tag{
+    position:absolute;
+    top: 10px;
+    right: -12px;
+    transform: rotate(0deg);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+  }
+
+  .sheet h2{
+    margin: 0 0 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sheet p{ color: var(--ink); max-width: 68ch; }
+  .lede{ color: var(--ink-dim); max-width: 62ch; }
+
+  /* ---------- Entry (experience / leadership) ---------- */
+  .entry + .entry{
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .entry-head{
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-bottom: 4px;
+  }
+  .entry-head h3{
+    margin:0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .entry-head .dates{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .entry .subtitle{
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+
+  ul.spec{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul.spec li{
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  ul.spec li::before{
+    content:"";
+    position:absolute;
+    left:0; top: 7px;
+    width: 8px; height: 8px;
+    border: 1.5px solid var(--accent);
+    transform: rotate(45deg);
+  }
+
+  /* ---------- Project grid ---------- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 700px){
+    .proj-grid{ grid-template-columns: 1fr; }
+  }
+  .proj{
+    background: var(--blue-panel-2);
+    border: 1px solid var(--line);
+    padding: 20px 22px;
+  }
+  .proj h3{
+    margin: 0 0 2px;
+    font-size: 1rem;
+  }
+  .proj .dates{
+    display:block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 700px){
+    .skill-grid{ grid-template-columns: 1fr; }
+  }
+  .skill-col h3{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    font-weight: 500;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .skill-col ul{
+    list-style:none;
+    margin:0; padding:0;
+    font-size: 0.92rem;
+  }
+  .skill-col li{ margin-bottom: 7px; }
+
+  /* ---------- Education block ---------- */
+  .edu-head{
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    align-items: baseline;
+  }
+  .edu-head h3{ margin:0; font-size: 1.05rem; }
+  .edu-head .dates{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+    color: var(--accent);
+  }
+  .edu-meta{ color: var(--ink-dim); font-size: 0.9rem; margin: 6px 0 14px; }
+  .edu-course{ font-size: 0.88rem; color: var(--ink); }
+  .edu-course b{ color: var(--ink-dim); font-weight: 500; }
+
+  /* ---------- Footer title block ---------- */
+  footer{
+    border-top: 1px solid var(--line-strong);
+    padding: 26px 0 40px;
+  }
+  .foot-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 700px){
+    .foot-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  .foot-grid span{ display:block; color: var(--ink-dim); margin-bottom: 4px; }
+  .foot-grid b{ color: var(--ink); font-weight: 500; }
+  .foot-grid a{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  .foot-grid a:hover{ color: var(--accent); border-color: var(--accent); }
+</style>
 </head>
 <body>
 
-<header>
-    <h1>Mack – Engineering Portfolio</h1>
-    <p>Mechanical • Electrical • Systems • Innovation</p>
+<header class="titleblock">
+  <div class="wrap">
+    <div>
+      <h1>Mack Harrington</h1>
+      <div class="role">Mechanical Engineering — NC State University</div>
+    </div>
+  </div>
 </header>
 
 <nav>
+  <div class="wrap">
     <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
     <a href="#projects">Projects</a>
+    <a href="#leadership">Leadership</a>
     <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<div class="container">
+<main class="wrap">
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>
-            I’m an engineer focused on solving real‑world problems through practical design, 
-            analytical thinking, and hands‑on development. This portfolio highlights selected 
-            projects and technical capabilities.
-        </p>
-    </section>
+  <section class="sheet" id="about">
+    <span class="sheet-tag">01</span>
+    <h2>About</h2>
+    <p class="lede">
+      I'm a mechanical engineering student at NC State, working toward a B.S. in Mechanical
+      Engineering with a focus on CAD, GD&amp;T, and hands-on manufacturing. My work spans
+      reverse-engineering legacy hardware into modern, manufacturable drawings, building
+      instrumented test rigs from scratch, and running aerodynamic and structural analysis
+      on wind turbine blades. I like problems that move between the CAD model, the shop
+      floor, and the test bench.
+    </p>
+  </section>
 
-    <section id="projects">
-        <h2>Projects</h2>
+  <section class="sheet" id="education">
+    <span class="sheet-tag">02</span>
+    <h2>Education</h2>
+    <div class="edu-head">
+      <h3>North Carolina State University</h3>
+      <span class="dates">Expected May 2028</span>
+    </div>
+    <div class="edu-meta">B.S. Mechanical Engineering &nbsp;·&nbsp; GPA 3.59 &nbsp;·&nbsp; Dean's List, Spring 2025 &amp; Spring 2026</div>
+    <div class="edu-course"><b>Relevant coursework:</b> Vibrations, Thermodynamics II, Fluid Mechanics</div>
+  </section>
 
-        <div class="project">
-            <h3>Wind Turbine Drivetrain Analysis</h3>
-            <p>
-                Modeled torque flow from rotor to generator, evaluated driveshaft loading, 
-                and assessed nacelle structural constraints. Included FEA, CAD modeling, 
-                and performance simulations.
-            </p>
-        </div>
+  <section class="sheet" id="experience">
+    <span class="sheet-tag">03</span>
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Mechanical Engineering Intern</h3>
+        <span class="dates">May 2026 – Aug 2026</span>
+      </div>
+      <div class="subtitle">METALTEK — Playmate Tennis Ball Machines</div>
+      <ul class="spec">
+        <li>Produced large-scale ball machine assemblies in Autodesk Fusion 360, each consisting of 100–250 components, including fabricated parts, sensors, fasteners, and electrical wiring.</li>
+        <li>Reverse-engineered 30+ years of legacy sheet metal parts into fully detailed CAD models and GD&amp;T-compliant engineering drawings, calculating bend allowances and deductions to preserve manufacturing accuracy.</li>
+        <li>Developed the company's first assembly instructions and custom drawing templates, creating proprietary symbols — including a Loctite 242 callout — to improve documentation consistency.</li>
+        <li>Collaborated with machinists and engineers to resolve design and assembly issues, and produced drawings for external vendors and painting quotes.</li>
+      </ul>
+    </div>
+  </section>
 
-        <div class="project">
-            <h3>Embedded Sensor System</h3>
-            <p>
-                Designed and programmed a microcontroller‑based monitoring system with 
-                real‑time data acquisition and wireless transmission.
-            </p>
-        </div>
-
-        <div class="project">
-            <h3>Automation Fixture Design</h3>
-            <p>
-                Created a modular fixture for manufacturing automation, improving 
-                repeatability and reducing cycle time by 18%.
-            </p>
-        </div>
-
-    </section>
-
-    <section id="skills">
-        <h2>Skills</h2>
-        <ul>
-            <li>CAD (SolidWorks, Fusion 360)</li>
-            <li>FEA (ANSYS, Fusion Simulation)</li>
-            <li>Embedded Systems (Arduino, ESP32)</li>
-            <li>Python, MATLAB</li>
-            <li>Technical Documentation & Reporting</li>
+  <section class="sheet" id="projects">
+    <span class="sheet-tag">04</span>
+    <h2>Projects</h2>
+    <div class="proj-grid">
+      <div class="proj">
+        <h3>Rotor Test Stand</h3>
+        <span class="dates">June 2026 – Aug 2026</span>
+        <ul class="spec">
+          <li>Developed and tested a SolidWorks rotor test stand to compare airfoil performance, integrating a 5 kg load cell and Hall effect sensor to measure thrust and RPM across 5–11 m/s wind speeds.</li>
+          <li>Built the data acquisition system with an HX711 amplifier, Arduino Nano, and I2C 1602 LCD for real-time thrust and RPM readouts.</li>
+          <li>Created a detailed BOM organized by fasteners, off-the-shelf components, and 3D-printed parts to streamline sourcing.</li>
         </ul>
-    </section>
+      </div>
+      <div class="proj">
+        <h3>QBlade Aerodynamic Optimization</h3>
+        <span class="dates">March 2026 – May 2026</span>
+        <ul class="spec">
+          <li>Increased turbine efficiency by 6% by iteratively evaluating 30+ airfoil combinations, comparing performance curves, tip-speed ratios, and stall behavior.</li>
+          <li>Performed static FEA of turbine blades at 13 m/s in ANSYS to identify critical root stresses and guide structural reinforcement.</li>
+          <li>Wrote workflow documentation so club members could reproduce the analysis on new airfoil configurations.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: <strong>mack@example.com</strong></p>
-        <p>LinkedIn: <strong>linkedin.com/in/mack-engineering</strong></p>
-    </section>
+  <section class="sheet" id="leadership">
+    <span class="sheet-tag">05</span>
+    <h2>Leadership &amp; Activities</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Aerodynamics &amp; Blade Team Lead</h3>
+        <span class="dates">Feb 2026 – Present</span>
+      </div>
+      <div class="subtitle">WindPack</div>
+      <ul class="spec">
+        <li>Coordinated with Mechanical, Electrical, and Project Development sub-teams across a 25+ member club to set competition goals, delegate responsibilities, and track milestones.</li>
+        <li>Increased member involvement by 20% by organizing technical and social events and facilitating team-building activities.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head">
+        <h3>Member</h3>
+        <span class="dates">Jan 2026 – Present</span>
+      </div>
+      <div class="subtitle">Theta Tau, Rho Chapter — Professional Engineering Fraternity</div>
+    </div>
+  </section>
 
-</div>
+  <section class="sheet" id="skills">
+    <span class="sheet-tag">06</span>
+    <h2>Technical Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-col">
+        <h3>CAD &amp; Design</h3>
+        <ul>
+          <li>SolidWorks</li>
+          <li>Autodesk Fusion</li>
+          <li>Siemens NX</li>
+          <li>AutoCAD</li>
+          <li>GD&amp;T</li>
+          <li>DFM / DFA</li>
+          <li>Technical Drawings</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>Manufacturing</h3>
+        <ul>
+          <li>3D Printing / Additive Mfg.</li>
+          <li>Sheet Metal Fabrication</li>
+          <li>Press Brake</li>
+          <li>Metrology</li>
+          <li>Welding</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h3>Analysis &amp; Testing</h3>
+        <ul>
+          <li>ANSYS / FEA / CFD</li>
+          <li>QBlade</li>
+          <li>MATLAB</li>
+          <li>Python</li>
+          <li>Arduino</li>
+          <li>Load Cells / Sensor Integration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-    © 2026 Mack – Engineering Portfolio
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><span>Drawn by</span><b>Mack Harrington</b></div>
+      <div><span>Email</span><b><a href="mailto:mdharri6@ncsu.edu">mdharri6@ncsu.edu</a></b></div>
+      <div><span>LinkedIn</span><b><a href="https://linkedin.com/in/mack-harrington" target="_blank" rel="noopener">linkedin.com/in/mack&#8209;harrington</a></b></div>
+      <div><span>Site</span><b><a href="https://mackharrington.github.io" target="_blank" rel="noopener">mackharrington.github.io</a></b></div>
+    </div>
+  </div>
 </footer>
 
 </body>
